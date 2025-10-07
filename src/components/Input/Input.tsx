@@ -6,6 +6,7 @@ import {
   faEyeSlash,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export type InputType =
   | 'text'
@@ -32,44 +33,73 @@ export default function Input({
 
   return (
     <div className="relative inline-block">
-      <input
-        {...props}
-        type={isPassword && showPassword ? 'text' : type}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className={`border border-blue-300 border-2 rounded px-2 py-1 w-52 
-    ${
-      isPassword && clearable
-        ? 'pr-14'
-        : isPassword || clearable
-        ? 'pr-8'
-        : 'pr-2'
-    } 
-    focus:outline-none focus:border-blue-500 transition-colors duration-300`}
-      />
-
-      {clearable && value && (
-        <button
-          type="button"
-          onClick={() => setValue('')}
-          className={`absolute top-1/2 transform -translate-y-1/2 ${
-            isPassword ? 'right-8' : 'right-2'
-          } text-gray-500 hover:text-gray-700`}
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <FontAwesomeIcon icon={faTimesCircle} />
-        </button>
-      )}
+          <input
+            key={type}
+            {...props}
+            type={isPassword && showPassword ? 'text' : type}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            className={`bg-gray-900 rounded px-2 py-1 w-52 
+            ${
+              isPassword && clearable
+                ? 'pr-14'
+                : isPassword || clearable
+                ? 'pr-8'
+                : 'pr-2'
+            } 
+            focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      {isPassword && (
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className={`absolute top-1/2 transform -translate-y-1/2 right-2
-          text-gray-500 hover:text-gray-700`}
-        >
-          <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-        </button>
-      )}
+      <AnimatePresence>
+        {clearable && value && (
+          <motion.button
+            key="clear"
+            type="button"
+            onClick={() => setValue('')}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.1 }}
+            className={`absolute top-1/2 transform -translate-y-1/2 ${
+              isPassword ? 'right-8' : 'right-2'
+            } text-gray-500 hover:text-gray-600 cursor-pointer`}
+          >
+            <FontAwesomeIcon icon={faTimesCircle} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isPassword && (
+          <motion.button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute top-1/2 transform -translate-y-1/2 right-2 text-gray-500 hover:text-gray-600 cursor-pointer"
+            whileHover={{ scale: 1.1 }}
+          >
+            <motion.span
+              key={showPassword ? 'eye-slash' : 'eye'}
+              initial={{ rotateY: 90, opacity: 0 }}
+              animate={{ rotateY: 0, opacity: 1 }}
+              exit={{ rotateY: -90, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}
+            >
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+            </motion.span>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
