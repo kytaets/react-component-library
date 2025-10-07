@@ -5,6 +5,7 @@ import Toast, { ToastType } from './Toast';
 const meta: Meta<typeof Toast> = {
   title: 'Components/Toast',
   component: Toast,
+  tags: ['autodocs'],
 };
 export default meta;
 
