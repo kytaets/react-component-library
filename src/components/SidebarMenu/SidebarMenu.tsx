@@ -55,7 +55,7 @@ export default function SidebarMenu({
               <h2 className="text-lg font-semibold">Menu</h2>
               <button
                 onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
               >
                 <FontAwesomeIcon icon={faTimes} size="lg" />
               </button>
@@ -65,7 +65,8 @@ export default function SidebarMenu({
               {items.map((item) => (
                 <div key={item.label} className="mb-2">
                   <button
-                    className="w-full flex justify-between items-center py-2 px-3 rounded hover:bg-gray-100 dark:hover:bg-neutral-800 transition"
+                    className="w-full flex justify-between items-center py-2 px-3 rounded hover:bg-gray-100 
+                    dark:hover:bg-neutral-800 transition cursor-pointer"
                     onClick={() => item.children && toggleMenu(item.label)}
                   >
                     <span>{item.label}</span>
@@ -93,7 +94,8 @@ export default function SidebarMenu({
                         {item.children.map((sub) => (
                           <button
                             key={sub.label}
-                            className="w-full text-left py-1.5 px-2 rounded hover:bg-gray-100 dark:hover:bg-neutral-800 text-sm transition"
+                            className="w-full text-left py-1.5 px-2 rounded hover:bg-gray-100 
+                            dark:hover:bg-neutral-800 text-sm transition cursor-pointer"
                           >
                             {sub.label}
                           </button>
