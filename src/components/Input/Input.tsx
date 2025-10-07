@@ -64,9 +64,8 @@ export default function Input({
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className={`absolute top-1/2 transform -translate-y-1/2 ${
-            clearable ? 'right-2' : 'right-8'
-          } text-gray-500 hover:text-gray-700`}
+          className={`absolute top-1/2 transform -translate-y-1/2 right-2
+          text-gray-500 hover:text-gray-700`}
         >
           <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
         </button>

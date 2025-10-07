@@ -8,7 +8,6 @@ export default function Home() {
           Input Types Demo
         </h1>
 
-        {/* === Всі типи інпутів === */}
         <div className="grid gap-6 w-full sm:grid-cols-2">
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Text. Not clearable</label>
