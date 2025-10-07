@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -39,33 +39,40 @@ export default function Toast({
   duration = 3000,
   onClose,
 }: ToastProps) {
+  const [visible, setVisible] = useState(true);
+
   useEffect(() => {
-    const timer = setTimeout(() => onClose?.(), duration);
+    const timer = setTimeout(() => setVisible(false), duration);
     return () => clearTimeout(timer);
-  }, [duration, onClose]);
+  }, [duration]);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 40 }}
-        transition={{ duration: 0.3 }}
-        className={`fixed bottom-4 right-4 border rounded-lg shadow-md px-4 py-3 
-          flex items-center gap-3 min-w-[260px] ${colorMap[type]}`}
-      >
-        <FontAwesomeIcon icon={iconMap[type]} className="text-xl" />
-        <span className="flex-1 font-medium">{message}</span>
+    <AnimatePresence
+      onExitComplete={() => {
+        onClose?.();
+      }}
+    >
+      {visible && (
+        <motion.div
+          key="toast"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 40 }}
+          transition={{ duration: 0.3 }}
+          className={`fixed bottom-4 right-4 border rounded-lg shadow-md px-4 py-3 
+            flex items-center gap-3 min-w-[260px] ${colorMap[type]}`}
+        >
+          <FontAwesomeIcon icon={iconMap[type]} className="text-xl" />
+          <span className="flex-1 font-medium">{message}</span>
 
-        {onClose && (
           <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition"
+            onClick={() => setVisible(false)}
+            className="text-gray-500 hover:text-gray-700 transition cursor-pointer"
           >
             <FontAwesomeIcon icon={faTimes} />
           </button>
-        )}
-      </motion.div>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }
