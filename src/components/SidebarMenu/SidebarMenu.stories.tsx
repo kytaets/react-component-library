@@ -5,8 +5,60 @@ import SidebarMenu from './SidebarMenu';
 const meta: Meta<typeof SidebarMenu> = {
   title: 'Components/SidebarMenu',
   component: SidebarMenu,
+  argTypes: {
+    isOpen: {
+      control: 'boolean',
+      defaultValue: false,
+    },
+    items: {
+      control: 'object',
+    },
+    onClose: {
+      action: 'closed',
+    },
+  },
 };
 export default meta;
+
+type Story = StoryObj<typeof SidebarMenu>;
+
+export const Playground: Story = {
+  args: {
+    isOpen: true,
+    items: [
+      {
+        label: 'Dashboard',
+      },
+      {
+        label: 'fsdfsfs',
+
+        children: [
+          {
+            label: 'Frontend',
+          },
+          {
+            label: 'Backend',
+          },
+          {
+            label: 'Mobile',
+          },
+        ],
+      },
+      {
+        label: 'Settings',
+
+        children: [
+          {
+            label: 'Account',
+          },
+          {
+            label: 'Security',
+          },
+        ],
+      },
+    ],
+  },
+};
 
 export const OneLevel: StoryObj = {
   render: () => {
