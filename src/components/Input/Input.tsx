@@ -1,5 +1,11 @@
 'use client';
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faEye,
+  faEyeSlash,
+  faTimesCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 export type InputType =
   | 'text'
@@ -31,30 +37,38 @@ export default function Input({
         type={isPassword && showPassword ? 'text' : type}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className={`border border-2 border-blue-300 rounded-md px-2 py-1 w-52 ${
-          isPassword || clearable ? 'pr-9' : 'pr-2'
-        } focus:outline-none focus:border-blue-500 transition-colors duration-500`}
+        className={`border border-blue-300 border-2 rounded px-2 py-1 w-52 
+    ${
+      isPassword && clearable
+        ? 'pr-14'
+        : isPassword || clearable
+        ? 'pr-8'
+        : 'pr-2'
+    } 
+    focus:outline-none focus:border-blue-500 transition-colors duration-300`}
       />
-
-      {isPassword && (
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className={`absolute transform -translate-y-1/2 ${
-            clearable ? 'right-6' : 'right-2'
-          } text-gray-500 hover:text-gray-700`}
-        >
-          {showPassword ? '🙈' : '👁️'}
-        </button>
-      )}
 
       {clearable && value && (
         <button
           type="button"
           onClick={() => setValue('')}
-          className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+          className={`absolute top-1/2 transform -translate-y-1/2 ${
+            isPassword ? 'right-8' : 'right-2'
+          } text-gray-500 hover:text-gray-700`}
         >
-          ❌
+          <FontAwesomeIcon icon={faTimesCircle} />
+        </button>
+      )}
+
+      {isPassword && (
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className={`absolute top-1/2 transform -translate-y-1/2 ${
+            clearable ? 'right-2' : 'right-8'
+          } text-gray-500 hover:text-gray-700`}
+        >
+          <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
         </button>
       )}
     </div>
