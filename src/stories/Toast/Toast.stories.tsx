@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import React, { useState } from 'react';
-import Toast, { ToastType } from './Toast';
+import Toast, { ToastType } from '@/components/Toast/Toast';
 
 const meta: Meta<typeof Toast> = {
   title: 'Components/Toast',

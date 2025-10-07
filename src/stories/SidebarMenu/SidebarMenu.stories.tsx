@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import SidebarMenu from './SidebarMenu';
+import SidebarMenu from '@/components/SidebarMenu/SidebarMenu';
 
 const meta: Meta<typeof SidebarMenu> = {
   title: 'Components/SidebarMenu',

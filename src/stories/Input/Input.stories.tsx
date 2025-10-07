@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import Input from './Input';
-import RHFInputForm from './RHFInputForm';
+import Input from '@/components/Input/Input';
+import RHFInputForm from '@/components/Input/RHFInputForm';
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',
