@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import Input from './Input';
+import RHFInputForm from './RHFInputForm';
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',
@@ -37,6 +38,17 @@ It supports multiple types (text, password, email, number, etc.) and can optiona
 
 export default meta;
 type Story = StoryObj<typeof Input>;
+
+export const RHFExample: Story = {
+  render: () => <RHFInputForm />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'RHF form example with validation and clearable inputs',
+      },
+    },
+  },
+};
 
 export const Playground: Story = {
   args: { placeholder: 'Type something...', type: 'text', clearable: true },

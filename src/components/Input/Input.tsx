@@ -24,12 +24,19 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export default function Input({
   type = 'text',
   clearable = false,
+  value: controlledValue,
+  onChange: controlledOnChange,
   ...props
 }: InputProps) {
-  const [value, setValue] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [localValue, setLocalValue] = useState('');
 
   const isPassword = type === 'password';
+
+  const value = controlledValue ?? localValue;
+  const onChange =
+    controlledOnChange ??
+    ((e: React.ChangeEvent<HTMLInputElement>) => setLocalValue(e.target.value));
 
   return (
     <div className="relative inline-block">
@@ -41,20 +48,19 @@ export default function Input({
           transition={{ duration: 0.5 }}
         >
           <input
-            key={type}
             {...props}
             type={isPassword && showPassword ? 'text' : type}
             value={value}
-            onChange={(e) => setValue(e.target.value)}
-            className={`bg-gray-100 text-gray-950 dark:bg-gray-900 dark:text-white rounded px-2 py-1 w-52 
-            ${
-              isPassword && clearable
-                ? 'pr-14'
-                : isPassword || clearable
-                ? 'pr-8'
-                : 'pr-2'
-            } 
-            focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+            onChange={onChange}
+            className={`bg-gray-100 text-gray-950 dark:bg-gray-900 dark:text-white rounded px-2 py-1 w-52
+              ${
+                isPassword && clearable
+                  ? 'pr-14'
+                  : isPassword || clearable
+                  ? 'pr-8'
+                  : 'pr-2'
+              }
+              focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
           />
         </motion.div>
       </AnimatePresence>
@@ -62,17 +68,25 @@ export default function Input({
       <AnimatePresence>
         {clearable && value && (
           <motion.button
-            key="clear"
             type="button"
-            onClick={() => setValue('')}
+            onClick={() => {
+              if (controlledOnChange) {
+                const event = {
+                  target: { value: '' },
+                } as unknown as React.ChangeEvent<HTMLInputElement>;
+                controlledOnChange(event);
+              } else {
+                setLocalValue('');
+              }
+            }}
+            className={`absolute top-1/2 transform -translate-y-1/2 ${
+              isPassword ? 'right-8' : 'right-2'
+            } text-gray-500 hover:text-gray-600 cursor-pointer`}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
             whileHover={{ scale: 1.1 }}
-            className={`absolute top-1/2 transform -translate-y-1/2 ${
-              isPassword ? 'right-8' : 'right-2'
-            } text-gray-500 hover:text-gray-600 cursor-pointer`}
           >
             <FontAwesomeIcon icon={faTimesCircle} />
           </motion.button>
