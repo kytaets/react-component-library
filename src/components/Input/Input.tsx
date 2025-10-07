@@ -46,7 +46,7 @@ export default function Input({
             type={isPassword && showPassword ? 'text' : type}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className={`bg-gray-900 rounded px-2 py-1 w-52 
+            className={`bg-gray-100 text-gray-950 dark:bg-gray-900 dark:text-white rounded px-2 py-1 w-52 
             ${
               isPassword && clearable
                 ? 'pr-14'
